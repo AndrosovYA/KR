@@ -56,6 +56,31 @@ static void SortTransportationsTransportationsByDateOfWork(PassengertTansportati
     Console.Clear();
 }
 
+static PassengertTansportation[] FindPassengerTransportationBySideNumberOfTheBus(PassengertTansportation[] transportations, int sideNumberOfTheBus)
+{
+    return Array.FindAll(transportations, x => x.sideNumberOfTheBus == sideNumberOfTheBus);
+}
+
+static PassengertTansportation[] FindPassengerTransportationByBrandOfTheBus(PassengertTansportation[] transportations, string brandOfTheBus)
+{
+    return Array.FindAll(transportations, x => x.brandOfTheBus == brandOfTheBus);
+}
+
+static PassengertTansportation[] FindPassengerTransportationByRouteNumber(PassengertTansportation[] transportations, int routeNumber)
+{
+    return Array.FindAll(transportations, x => x.routeNumber == routeNumber);
+}
+
+static PassengertTansportation[] FindPassengerTransportationByDateOfWork(PassengertTansportation[] transportations, DateOnly startTimeOfWork, DateOnly endTimeOfWork)
+{
+    return Array.FindAll(transportations, x => x.dateOfWork >= startTimeOfWork && x.dateOfWork <= endTimeOfWork);
+}
+
+static PassengertTansportation[] FindPassengerTransportationByFullNameOfTheDriver(PassengertTansportation[] transportations, string fullNameOfTheDriver)
+{
+    return Array.FindAll(transportations, x => x.fullNameOfTheDriver == fullNameOfTheDriver);
+}
+
 struct PassengertTansportation
 {
     public int sideNumberOfTheBus;
