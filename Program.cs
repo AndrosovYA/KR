@@ -1,84 +1,54 @@
 ﻿
 using System.Drawing;
 
-static int CompareTransportationsBySideNumberOfTheBus(PassengertTansportation a, PassengertTansportation b)
+static void SortTransportationsBySideNumberOfTheBus(List<PassengertTansportation> transportations)
 {
-    return a.sideNumberOfTheBus!.CompareTo(b.sideNumberOfTheBus!);
+    transportations.Sort((x, y) => x.sideNumberOfTheBus.CompareTo(y.sideNumberOfTheBus));
 }
 
-static void SortTransportationsBySideNumberOfTheBus(PassengertTansportation[] transportations)
+static void SortTransportationsTransportationsByBrandOfTheBus(List<PassengertTansportation> transportations)
 {
-    Array.Sort(transportations, CompareTransportationsBySideNumberOfTheBus);
-    Console.Clear();
+    transportations.Sort((x, y) => x.brandOfTheBus.CompareTo(y.brandOfTheBus));
 }
 
-static int CompareTransportationsByBrandOfTheBus(PassengertTansportation a, PassengertTansportation b)
+static void SortTransportationsTransportationsByRouteNumber(List<PassengertTansportation> transportations)
 {
-    return a.brandOfTheBus!.CompareTo(b.brandOfTheBus!);
+    transportations.Sort((x, y) => x.routeNumber.CompareTo(y.routeNumber));
 }
 
-static void SortTransportationsTransportationsByBrandOfTheBus(PassengertTansportation[] transportations)
+static void SortTransportationsTransportationsByFullNameOfTheDriver(List<PassengertTansportation> transportations)
 {
-    Array.Sort(transportations, CompareTransportationsByBrandOfTheBus);
-    Console.Clear();
+    transportations.Sort((x, y) => x.fullNameOfTheDriver.CompareTo(y.fullNameOfTheDriver));
 }
 
-static int CompareTransportationsByRouteNumber(PassengertTansportation a, PassengertTansportation b)
+static void SortTransportationsTransportationsByDateOfWork(List<PassengertTansportation> transportations)
 {
-    return a.routeNumber!.CompareTo(b.routeNumber!);
+    transportations.Sort((x, y) => x.dateOfWork.CompareTo(y.dateOfWork));
 }
 
-static void SortTransportationsTransportationsByRouteNumber(PassengertTansportation[] transportations)
+static List<PassengertTansportation> FindPassengerTransportationBySideNumberOfTheBus(List<PassengertTansportation> transportations, int sideNumberOfTheBus)
 {
-    Array.Sort(transportations, CompareTransportationsByRouteNumber);
-    Console.Clear();
+    return transportations.FindAll(x => x.sideNumberOfTheBus == sideNumberOfTheBus);
 }
 
-static int CompareTransportationsByFullNameOfTheDriver(PassengertTansportation a, PassengertTansportation b)
+static List<PassengertTansportation> FindPassengerTransportationByBrandOfTheBus(List<PassengertTansportation> transportations, string brandOfTheBus)
 {
-    return a.fullNameOfTheDriver!.CompareTo(b.fullNameOfTheDriver!);
+    return transportations.FindAll(x => x.brandOfTheBus == brandOfTheBus);
 }
 
-static void SortTransportationsTransportationsByFullNameOfTheDriver(PassengertTansportation[] transportations)
+static List<PassengertTansportation> FindPassengerTransportationByRouteNumber(List<PassengertTansportation> transportations, int routeNumber)
 {
-    Array.Sort(transportations, CompareTransportationsByFullNameOfTheDriver);
-    Console.Clear();
+    return transportations.FindAll(x => x.routeNumber == routeNumber);
 }
 
-static int CompareTransportationsByDateOfWork(PassengertTansportation a, PassengertTansportation b)
+static List<PassengertTansportation> FindPassengerTransportationByDateOfWork(List<PassengertTansportation> transportations, DateOnly startTimeOfWork, DateOnly endTimeOfWork)
 {
-    return a.dateOfWork!.CompareTo(b.dateOfWork!);
+    return transportations.FindAll(x => x.dateOfWork >= startTimeOfWork && x.dateOfWork <= endTimeOfWork);
 }
 
-static void SortTransportationsTransportationsByDateOfWork(PassengertTansportation[] transportations)
+static List<PassengertTansportation> FindPassengerTransportationByFullNameOfTheDriver(List<PassengertTansportation> transportations, string fullNameOfTheDriver)
 {
-    Array.Sort(transportations, CompareTransportationsByDateOfWork);
-    Console.Clear();
-}
-
-static PassengertTansportation[] FindPassengerTransportationBySideNumberOfTheBus(PassengertTansportation[] transportations, int sideNumberOfTheBus)
-{
-    return Array.FindAll(transportations, x => x.sideNumberOfTheBus == sideNumberOfTheBus);
-}
-
-static PassengertTansportation[] FindPassengerTransportationByBrandOfTheBus(PassengertTansportation[] transportations, string brandOfTheBus)
-{
-    return Array.FindAll(transportations, x => x.brandOfTheBus == brandOfTheBus);
-}
-
-static PassengertTansportation[] FindPassengerTransportationByRouteNumber(PassengertTansportation[] transportations, int routeNumber)
-{
-    return Array.FindAll(transportations, x => x.routeNumber == routeNumber);
-}
-
-static PassengertTansportation[] FindPassengerTransportationByDateOfWork(PassengertTansportation[] transportations, DateOnly startTimeOfWork, DateOnly endTimeOfWork)
-{
-    return Array.FindAll(transportations, x => x.dateOfWork >= startTimeOfWork && x.dateOfWork <= endTimeOfWork);
-}
-
-static PassengertTansportation[] FindPassengerTransportationByFullNameOfTheDriver(PassengertTansportation[] transportations, string fullNameOfTheDriver)
-{
-    return Array.FindAll(transportations, x => x.fullNameOfTheDriver == fullNameOfTheDriver);
+    return transportations.FindAll(x => x.fullNameOfTheDriver == fullNameOfTheDriver);
 }
 
 struct PassengertTansportation
