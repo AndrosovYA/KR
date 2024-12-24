@@ -1,6 +1,6 @@
 ﻿
 using System.Drawing;
-
+#region Sort
 static void SortTransportationsBySideNumberOfTheBus(List<PassengertTansportation> transportations)
 {
     transportations.Sort((x, y) => x.sideNumberOfTheBus.CompareTo(y.sideNumberOfTheBus));
@@ -25,7 +25,8 @@ static void SortTransportationsTransportationsByDateOfWork(List<PassengertTanspo
 {
     transportations.Sort((x, y) => x.dateOfWork.CompareTo(y.dateOfWork));
 }
-
+#endregion
+#region Search
 static List<PassengertTansportation> FindPassengerTransportationBySideNumberOfTheBus(List<PassengertTansportation> transportations, int sideNumberOfTheBus)
 {
     return transportations.FindAll(x => x.sideNumberOfTheBus == sideNumberOfTheBus);
@@ -50,6 +51,7 @@ static List<PassengertTansportation> FindPassengerTransportationByFullNameOfTheD
 {
     return transportations.FindAll(x => x.fullNameOfTheDriver == fullNameOfTheDriver);
 }
+#endregion
 
 struct PassengertTansportation
 {
