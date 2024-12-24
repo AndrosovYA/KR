@@ -92,3 +92,9 @@ struct PassengertTansportation
     public DateOnly endTimeOfWork;
     public double revenue;
 }
+
+struct ReferenceBook
+{
+    public string brand;
+    public string fullName;
+}
