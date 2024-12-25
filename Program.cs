@@ -1,5 +1,72 @@
 ﻿using System.Drawing;
+using System.Text;
 
+public static void Main()
+{
+    Console.OutputEncoding = Encoding.UTF8;
+    Console.Clear();
+
+    StreamReader srReferenceBookOfBrandOfTheBus = new("..\\..\\..\\DataFiles\\ReferenceBookOfBrandOfTheBus.txt"),
+    srReferenceBookOfFullNameOfTheDriver = new("..\\..\\..\\DataFiles\\ReferenceBookOfFullNameOfTheDriver.txt"),
+    srTransportation = new("..\\..\\..\\DataFiles\\Transportations.txt");
+    List<Transportation> transportations = ReadTransportationsFromFile(srTransportation);
+    List<ReferenceBook> referenceBookOfBrandOfTheBus = ReadReferenceBookFromFile(srReferenceBookOfBrandOfTheBus),
+    referenceBookOfFullNameOfTheDriver = ReadReferenceBookFromFile(srReferenceBookOfFullNameOfTheDriver);
+    srReferenceBookOfBrandOfTheBus.Close();
+    srReferenceBookOfFullNameOfTheDriver.Close();
+    srTransportation.Close();
+}
+
+public static void MainMenu(List<Transportation> transportations,
+                     List<ReferenceBook> referenceBookOfBrandOfTheBus,
+                     List<ReferenceBook> srReferenceBookOfFullNameOfTheDriver)
+{
+    while (true)
+    {
+        Console.WriteLine("Выберете один из вариантов работы с Базой данных:");
+        Console.WriteLine("1) Редактирование БД");
+        Console.WriteLine("2) Редактирование справочников");
+        Console.WriteLine("3) Вывод данных");
+        Console.WriteLine("4) Поиск в БД");
+        Console.WriteLine("5) Сортировка записей");
+        Console.WriteLine("6) Создать отчёт");
+        Console.WriteLine("0) Сохранить и выйти");
+        Console.ResetColor();
+        if (IsValidOption(out int option))
+        {
+            Console.Clear();
+            switch (option)
+            {
+                case 1:
+                    EditDBMenu(transportations, referenceBookOfBrandOfTheBus, srReferenceBookOfFullNameOfTheDriver);
+                    break;
+                case 2:
+                    EditReferenceBooksMenu(referenceBookOfBrandOfTheBus, srReferenceBookOfFullNameOfTheDriver);
+                    break;
+                case 3:
+                    OutputMenu(transportations, referenceBookOfBrandOfTheBus, srReferenceBookOfFullNameOfTheDriver);
+                    break;
+                case 4:
+                    SearchMenu(transportations, referenceBookOfBrandOfTheBus, srReferenceBookOfFullNameOfTheDriver);
+                    break;
+                case 5:
+                    SortMenu(transportations, referenceBookOfBrandOfTheBus, srReferenceBookOfFullNameOfTheDriver);
+                    break;
+                case 6:
+                    ReportMenu(transportations, referenceBookOfBrandOfTheBus, srReferenceBookOfFullNameOfTheDriver);
+                    break;
+                case 0:
+                    Console.WriteLine("Выход из программы");
+                    return;
+                default:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Отсутствует опция под номером {option}");
+                    Console.ResetColor();
+                    break;
+            }
+        }
+    }
+}
 
 
 #region Read
@@ -99,6 +166,30 @@ static List<Transportation> FindTransportationByDateOfWork(List<Transportation> 
 static List<Transportation> FindTransportationByFullNameOfTheDriver(List<Transportation> transportations, string fullNameOfTheDriver)
 {
     return transportations.FindAll(x => x.fullNameOfTheDriver == fullNameOfTheDriver);
+}
+#endregion
+
+#region IsValid
+
+public static bool IsValid(out int option, int? start = null, int? end = null)
+{
+    if (int.TryParse(Console.ReadLine(), out option) && (start == null || option >= start) && (end == null || option <= end))
+    {
+        return true;
+    }
+    else
+    {
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("Неверный ввод, повторите попытку ввода");
+        Console.ResetColor();
+        return false;
+    }
+}
+
+public static bool IsValidOption(out int option)
+{
+    return IsValid(out option, 0);
 }
 #endregion
 
