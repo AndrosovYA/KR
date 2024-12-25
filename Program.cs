@@ -1,59 +1,108 @@
-﻿
-using System.Drawing;
+﻿using System.Drawing;
+
+
+
+#region Read
+public static List<Transportation> ReadTransportationsFromFile(StreamReader srTransportation)
+{
+    Type type = new Transportation().GetType();
+    int n = srTransportation.ReadToEnd().Split('\n').Length / type.GetFields().Length;
+    srTransportation.BaseStream.Position = 0;
+
+    List<Transportation> transportations = [];
+    for (int i = 0; i < n; i++)
+    {
+        transportations.Add(ReadTransportationFromFile(srTransportation));
+    }
+    return transportations;
+}
+public static Transportation ReadTransportationFromFile(StreamReader srTransportation)
+{
+    Transportation transportation = new()
+    {
+        sideNumberOfTheBus = Convert.ToInt32(srTransportation.ReadLine()),
+        brandOfTheBus = srTransportation.ReadLine()!,
+        routeNumber = Convert.ToInt32(srTransportation.ReadLine()),
+        fullNameOfTheDriver = srTransportation.ReadLine()!,
+        dateOfWork = DateOnly.Parse(srTransportation.ReadLine()!),
+        startTimeOfWork = DateOnly.Parse(srTransportation.ReadLine()!),
+        endTimeOfWork = DateOnly.Parse(srTransportation.ReadLine()!),
+        revenue = Convert.ToDouble(srTransportation.ReadLine()!)
+    };
+    return transportation;
+}
+public static List<ReferenceBook> ReadReferenceBookFromFile(StreamReader srReferenceBook)
+{
+    int n = srReferenceBook.ReadToEnd().Split('\n').Length;
+    srReferenceBook.BaseStream.Position = 0;
+
+    List<ReferenceBook> referenceBook = [];
+    ReferenceBook item;
+    for (int i = 0; i < n; i++)
+    {
+        item.title = srReferenceBook.ReadLine()!;
+        item.ID = i;
+        referenceBook.Add(item);
+    }
+    return referenceBook;
+}
+#endregion
+
 #region Sort
-static void SortTransportationsBySideNumberOfTheBus(List<PassengertTansportation> transportations)
+static void SortTransportationsBySideNumberOfTheBus(List<Transportation> transportations)
 {
     transportations.Sort((x, y) => x.sideNumberOfTheBus.CompareTo(y.sideNumberOfTheBus));
 }
 
-static void SortTransportationsTransportationsByBrandOfTheBus(List<PassengertTansportation> transportations)
+static void SortTransportationsByBrandOfTheBus(List<Transportation> transportations)
 {
     transportations.Sort((x, y) => x.brandOfTheBus.CompareTo(y.brandOfTheBus));
 }
 
-static void SortTransportationsTransportationsByRouteNumber(List<PassengertTansportation> transportations)
+static void SortTransportationsByRouteNumber(List<Transportation> transportations)
 {
     transportations.Sort((x, y) => x.routeNumber.CompareTo(y.routeNumber));
 }
 
-static void SortTransportationsTransportationsByFullNameOfTheDriver(List<PassengertTansportation> transportations)
+static void SortTransportationsByFullNameOfTheDriver(List<Transportation> transportations)
 {
     transportations.Sort((x, y) => x.fullNameOfTheDriver.CompareTo(y.fullNameOfTheDriver));
 }
 
-static void SortTransportationsTransportationsByDateOfWork(List<PassengertTansportation> transportations)
+static void SortTransportationsByDateOfWork(List<Transportation> transportations)
 {
     transportations.Sort((x, y) => x.dateOfWork.CompareTo(y.dateOfWork));
 }
 #endregion
+
 #region Search
-static List<PassengertTansportation> FindPassengerTransportationBySideNumberOfTheBus(List<PassengertTansportation> transportations, int sideNumberOfTheBus)
+static List<Transportation> FindTransportationBySideNumberOfTheBus(List<Transportation> transportations, int sideNumberOfTheBus)
 {
     return transportations.FindAll(x => x.sideNumberOfTheBus == sideNumberOfTheBus);
 }
 
-static List<PassengertTansportation> FindPassengerTransportationByBrandOfTheBus(List<PassengertTansportation> transportations, string brandOfTheBus)
+static List<Transportation> FindTransportationByBrandOfTheBus(List<Transportation> transportations, string brandOfTheBus)
 {
     return transportations.FindAll(x => x.brandOfTheBus == brandOfTheBus);
 }
 
-static List<PassengertTansportation> FindPassengerTransportationByRouteNumber(List<PassengertTansportation> transportations, int routeNumber)
+static List<Transportation> FindTransportationByRouteNumber(List<Transportation> transportations, int routeNumber)
 {
     return transportations.FindAll(x => x.routeNumber == routeNumber);
 }
 
-static List<PassengertTansportation> FindPassengerTransportationByDateOfWork(List<PassengertTansportation> transportations, DateOnly startTimeOfWork, DateOnly endTimeOfWork)
+static List<Transportation> FindTransportationByDateOfWork(List<Transportation> transportations, DateOnly startTimeOfWork, DateOnly endTimeOfWork)
 {
     return transportations.FindAll(x => x.dateOfWork >= startTimeOfWork && x.dateOfWork <= endTimeOfWork);
 }
 
-static List<PassengertTansportation> FindPassengerTransportationByFullNameOfTheDriver(List<PassengertTansportation> transportations, string fullNameOfTheDriver)
+static List<Transportation> FindTransportationByFullNameOfTheDriver(List<Transportation> transportations, string fullNameOfTheDriver)
 {
     return transportations.FindAll(x => x.fullNameOfTheDriver == fullNameOfTheDriver);
 }
 #endregion
 
-struct PassengertTansportation
+struct Transportation
 {
     public int sideNumberOfTheBus;
     public string brandOfTheBus;
@@ -67,6 +116,6 @@ struct PassengertTansportation
 
 struct ReferenceBook
 {
-    public string brand;
-    public string fullName;
+    public int ID;
+    public string title;
 }
